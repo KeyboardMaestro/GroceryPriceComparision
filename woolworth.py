@@ -1,9 +1,16 @@
-import requests
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 
-url = "https://www.woolworths.com.au/shop/browse/specials/half-price?icmpid=sm-hp-hero1:half-price-specials-nsw-vic%7Cwk32"
-headers = {"User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15"}
-#Discount Page of Woolworth
-res = requests.get(url, headers=headers)
-res.raise_for_status()
-soup = BeautifulSoup(res.text, "lxml")
+options = webdriver.ChromeOptions()
+#options.add_argument("headless") # Using headless option to reduce memory usage.
+options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36")
+# add user Agent
+target_url = "https://www.woolworths.com.au/shop/browse/summer?pageNumber=1" # Summer Items Page of Woolworth
+
+browser = webdriver.Chrome(options=options)
+browser.get(target_url)
+
+#browser.find_element(By.)
+
+soup = BeautifulSoup(browser.page_source, "lxml")
