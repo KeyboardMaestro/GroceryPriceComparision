@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import datetime
 
 date = datetime.datetime.now()
-file_format = date.strftime("%d%m%Y")
+file_format = date.strftime("%d%m%y")
 options = webdriver.ChromeOptions()
 #options.add_argument("headless") # Using headless option to reduce memory usage.
 options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36")
@@ -16,7 +16,6 @@ options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
 # add user Agent
 browser = webdriver.Chrome(options=options)
 #browser.find_element()
-attributes = ["Date", "Price"]
 index = 0
 for page in range(1, 56):
     print("page : " + str(page))
@@ -36,7 +35,6 @@ for page in range(1, 56):
         if out_of_stock:
             price = None
         row = [file_format, price]
-        with open("./items/"+str(index)+". "+title+".csv", "w", encoding="utf8") as record:
+        with open("./items/"+str(index)+". "+title+".csv", "a", encoding="utf8") as record:
             writter = csv.writer(record)
-            writter.writerow(attributes)
             writter.writerow(row)
