@@ -35,7 +35,7 @@ for page in range(1, 56):
         if price_check:
             price = price_check.get_text()
         row = [file_format, price]
-        with open("./items/"+str(index)+". "+title+".csv", "w", encoding="utf8") as record:
+        with open("./items/"+str(index+1)+". "+title+".csv", "w", encoding="utf8") as record:
             writter = csv.writer(record)
             writter.writerow(attributes)
             writter.writerow(row)
