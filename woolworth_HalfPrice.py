@@ -18,7 +18,7 @@ browser = webdriver.Chrome(options=options)
 #browser.find_element()
 attributes = ["Date", "Price"]
 index = 0
-for page in range(1, 56):
+for page in range(1, 38):
     print("page : " + str(page))
     target_url = ("https://www.woolworths.com.au/shop/browse/specials/half-price?icmpid=sm-hp-hero2:half-price-specials%7Cwk33&pageNumber=" + str(page))
     browser.get(target_url)
@@ -30,11 +30,10 @@ for page in range(1, 56):
         title = item.find_next("a", attrs={"class":"product-title-link"}).get_text()
         price_check = item.find("div", attrs={"class" : "primary"})
         out_of_stock = item.find("div", attrs={"class":"product-tile-unavailable-tag ng-star-inserted"})
-        if out_of_stock:
-            price = None
-            continue
         if price_check:
             price = price_check.get_text()
+        if out_of_stock:
+            price = None
         row = [file_format, price]
         with open("./items/"+str(index)+". "+title+".csv", "w", encoding="utf8") as record:
             writter = csv.writer(record)
