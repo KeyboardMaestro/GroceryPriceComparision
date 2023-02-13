@@ -17,7 +17,7 @@ options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
 browser = webdriver.Chrome(options=options)
 #browser.find_element()
 attributes = ["Date", "Price"]
-
+index = 0
 for page in range(1, 56):
     print("page : " + str(page))
     target_url = ("https://www.woolworths.com.au/shop/browse/specials/half-price?icmpid=sm-hp-hero2:half-price-specials%7Cwk33&pageNumber=" + str(page))
@@ -25,7 +25,8 @@ for page in range(1, 56):
     wait = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "product-tile-v2")))
     soup = BeautifulSoup(browser.page_source, "lxml")
     items = soup.find_all("section", attrs={"class": "product-tile-v2"}) # Find every block of an item
-    for index, item in enumerate(items):
+    for item in items:
+        index += 1
         title = item.find_next("a", attrs={"class":"product-title-link"}).get_text()
         price_check = item.find("div", attrs={"class" : "primary"})
         out_of_stock = item.find("div", attrs={"class":"product-tile-unavailable-tag ng-star-inserted"})
@@ -35,7 +36,7 @@ for page in range(1, 56):
         if price_check:
             price = price_check.get_text()
         row = [file_format, price]
-        with open("./items/"+str(index+1)+". "+title+".csv", "w", encoding="utf8") as record:
+        with open("./items/"+str(index)+". "+title+".csv", "w", encoding="utf8") as record:
             writter = csv.writer(record)
             writter.writerow(attributes)
             writter.writerow(row)
